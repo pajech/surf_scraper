@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+locksmith.py
 
 # C extensions
 *.so
