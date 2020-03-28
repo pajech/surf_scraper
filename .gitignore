@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 locksmith.py
+credentials.json
+token.json
+TorquaySurfReport.csv
 
 # C extensions
 *.so

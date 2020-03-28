@@ -3,6 +3,8 @@ import urllib.request
 import time
 from bs4 import BeautifulSoup
 import pandas as pd
+import ezgmail
+import os
 
 
 # Helper Functions
@@ -130,6 +132,95 @@ def add_swell_period_rating(dataframe):
     dataframe['swellperiod_rating']=dataframe.apply(lambda row: add_rating (row), axis="columns")
     return dataframe
 
+def add_wind_rating(dataframe):
+    def add_rating(row):
+        wind_speed = row['wind_speed2']
+        
+        if wind_speed <5:
+            return 10
+        elif wind_speed <10:
+            return 8
+        elif wind_speed < 15:
+            return 6
+        elif wind_speed < 20:
+            return 5
+        elif wind_speed < 25:
+            return 3
+        else:
+            return 1
+
+    dataframe['wind_rating']=dataframe.apply(lambda row: add_rating(row), axis="columns")
+    return dataframe
+
+def add_total_rating(dataframe):
+    dataframe['total_rating'] = dataframe['wind_rating'] + dataframe['swellperiod_rating'] + dataframe['heigh_rating']
+    return dataframe
+
+def filter_to_high_rating(dataframe):
+    dataframe = dataframe[dataframe['total_rating']>15]
+    return dataframe
+
+def add_day_of_week(dataframe):
+    dataframe['day_of_week'] = dataframe['daydate'].str.split(r'[0-9]', expand=True)
+    return dataframe
+
+def filter_to_relevant_cols(dataframe):
+    dataframe = dataframe[['daydate','time','size','swell_period','wind','total_rating','day_of_week']]
+    return dataframe
+
+def build_email_body(dataframe):
+    str_email_start = 'Hey Roost, the best times for a shred this week are: \n \n'
+    str_email_middle = ''
+    for i in range(5):
+        str_interim = """{Weekday} at {Time}. \n This is the height: {Height}, the period: {Period} and the wind: {Wind}. 
+        It scored an overall rating of {Rating}/30 \n \n""".format(Weekday = dataframe['day_of_week'].iloc[i],
+                                                        Time = dataframe['time'].iloc[i],
+                                                        Height = dataframe['size'].iloc[i],
+                                                        Period = dataframe['swell_period'].iloc[i],
+                                                        Wind = dataframe['wind'].iloc[i],
+                                                        Rating = dataframe['total_rating'].iloc[i]                                                   
+                                                        )
+        str_email_middle = str_email_middle + str_interim
+
+
+
+    dataframe_weekend = dataframe[dataframe['day_of_week'].isin(['Saturday', 'Sunday'])]
+
+    if len(dataframe_weekend) > 0:
+        str_weekend = '\n If you are relegated to the weekend like the corporate drone that you are, you\'re best bests are: \n \n'
+        for i in range(len(dataframe_weekend)):
+            str_interim = """{Weekday} at {Time}. \n This is the height: {Height}, the period: {Period} and the wind: {Wind}. 
+        It scored an overall rating of {Rating}/30 \n \n""".format(Weekday = dataframe_weekend['day_of_week'].iloc[i],
+                                                        Time = dataframe_weekend['time'].iloc[i],
+                                                        Height = dataframe_weekend['size'].iloc[i],
+                                                        Period = dataframe_weekend['swell_period'].iloc[i],
+                                                        Wind = dataframe_weekend['wind'].iloc[i],
+                                                        Rating = dataframe_weekend['total_rating'].iloc[i]                                                   
+                                                        )
+        str_weekend = str_weekend + str_interim
+    else:
+        str_weekend = ''
+            
+
+    str_email_end = ' Happy Shredding. \n'
+        
+
+
+    str_email_all = str_email_start + str_email_middle + str_weekend + str_email_end
+    return str_email_all
+
+
+def sort_by_high_rating(dataframe):
+    dataframe = dataframe.sort_values(by='total_rating', ascending = False)
+    return dataframe
+
+    
+def filter_out_nocturnal_times(dataframe):
+    dataframe = dataframe[dataframe['time'].isin(['6am','9am','Noon','3pm'])]
+    return dataframe
+
+
+
 from config import scraper_config
 scraper_config['Torquay']['response']               = extract_url(scraper_config['Torquay']['url'])
 scraper_config['Torquay']['soup_object']            = extract_html(scraper_config['Torquay']['response'])
@@ -143,9 +234,39 @@ scraper_config['Torquay']['weekly_dataframe']       = add_wind_speed(scraper_con
 scraper_config['Torquay']['weekly_dataframe']       = add_swell_period(scraper_config['Torquay']['weekly_dataframe'])
 scraper_config['Torquay']['weekly_dataframe']       = add_swell_height_rating(scraper_config['Torquay']['weekly_dataframe'])
 scraper_config['Torquay']['weekly_dataframe']       = add_swell_period_rating(scraper_config['Torquay']['weekly_dataframe'])
+scraper_config['Torquay']['weekly_dataframe']       = add_wind_rating(scraper_config['Torquay']['weekly_dataframe'])
+scraper_config['Torquay']['weekly_dataframe']       = add_day_of_week(scraper_config['Torquay']['weekly_dataframe'])
+scraper_config['Torquay']['weekly_dataframe']       = add_total_rating(scraper_config['Torquay']['weekly_dataframe'])
+scraper_config['Torquay']['weekly_dataframe']       = filter_to_high_rating(scraper_config['Torquay']['weekly_dataframe'])
+scraper_config['Torquay']['weekly_dataframe']       = filter_to_relevant_cols(scraper_config['Torquay']['weekly_dataframe'])
+scraper_config['Torquay']['weekly_dataframe']       = filter_out_nocturnal_times(scraper_config['Torquay']['weekly_dataframe'])
+scraper_config['Torquay']['weekly_dataframe'].to_csv('TorquaySurfReport.csv', index = False)
+scraper_config['Torquay']['weekly_dataframe']       = sort_by_high_rating(scraper_config['Torquay']['weekly_dataframe'])
+
+
+
 
 print(scraper_config['Torquay']['weekly_dataframe'].columns.values)
 print(scraper_config['Torquay']['weekly_dataframe'].head())
+print(scraper_config['Torquay']['weekly_dataframe'].total_rating.min())
+
+
+ezgmail.init()
+
+email_body = build_email_body(scraper_config['Torquay']['weekly_dataframe'])
+print(email_body)
+
+# The best times to go this week are:
+
+# If you are stuck to weekend vibes, here is your best bet
+
+ezgmail.send('paulychynoweth@gmail.com', 'Yo Bra', email_body, ['TorquaySurfReport.csv'])
 
 # To Do List:
 # - Currently just Torquay but would like to expand it to other surf locations
+# - Add in snowboarding
+# - Add in decorative functions
+# - Add in try and logging functions
+# - Add in email / sms
+# - Add in Airflow
+# - Change the ELIF statements and apply methods
