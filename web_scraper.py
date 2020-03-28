@@ -264,9 +264,11 @@ ezgmail.send('paulychynoweth@gmail.com', 'Yo Bra', email_body, ['TorquaySurfRepo
 
 # To Do List:
 # - Currently just Torquay but would like to expand it to other surf locations
+# - Add in transformations and other modules to expand it out
 # - Add in snowboarding
 # - Add in decorative functions
 # - Add in try and logging functions
-# - Add in email / sms
-# - Add in Airflow
+# - Add in a list of emails
+# - Create classes for each user and what they are opted in for
+# - Add in Airflow https://towardsdatascience.com/getting-started-with-apache-airflow-df1aa77d7b1b
 # - Change the ELIF statements and apply methods
