@@ -6,6 +6,7 @@ locksmith.py
 credentials.json
 token.json
 TorquaySurfReport.csv
+JanJucSurfReport.csv
 
 # C extensions
 *.so

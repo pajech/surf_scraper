@@ -8,7 +8,13 @@ scraper_config = {
         'response'              :None,
         'soup_object'           :None,
         'weekly_forecast_dict'  :{},
-        'weekly_forecast_list'  :[],
-        'summarised_df'         :empty_df
+        'weekly_forecast_list'  :[]
+    },
+    'JanJuc':{
+        'url'                   :'https://magicseaweed.com/Jan-Juc-Surf-Report/1066/',
+        'response'              :None,
+        'soup_object'           :None,
+        'weekly_forecast_dict'  :{},
+        'weekly_forecast_list'  :[]
     }
 }

@@ -36,5 +36,3 @@ def run_core_processes(dict_of_beaches, beach):
 
 
 
-# To Do List
-# - Create an exporter function
