@@ -1,4 +1,5 @@
 import pandas as pd
+import time
 
 from config import scraper_config
 
@@ -8,8 +9,9 @@ from dataframe_builder import build_forecast_dict, build_forecast_list, build_fo
 from dataframe_builder import add_day_date, add_size_of_wave, add_wind_speed, add_swell_period, add_swell_height_rating
 from dataframe_builder import add_swell_period_rating, add_wind_rating, add_day_of_week, add_total_rating
 from dataframe_builder import filter_to_high_rating, filter_to_relevant_cols, filter_out_nocturnal_times, sort_by_high_rating
+from logger            import log_core_process_start_and_finish, log_core_process_header
 
-
+@log_core_process_start_and_finish
 def run_core_processes(dict_of_beaches, beach):
     dict_of_beaches[beach]['response']               = extract_url(dict_of_beaches[beach]['url'])
     dict_of_beaches[beach]['soup_object']            = extract_html(dict_of_beaches[beach]['response'])

@@ -27,6 +27,15 @@ def build_forecast_list(forecast_dict):
             #append the day date to the list 
             hour_forcast = [forecast_dict[key][i]['data-date-anchor']] + hour_forcast
             
+            wind_desc_index = len(forecast_dict[key][i].find_all('td')) - 4
+            for i,td in enumerate(forecast_dict[key][i].find_all('td')):
+                if i == wind_desc_index:
+                    wind_desc = str(td.get('title')).split('-')[0]
+                    wind_desc_list = []
+                    wind_desc_list.append(wind_desc)
+            hour_forcast = hour_forcast + wind_desc_list
+            
+            
             #Append the hourly data to the day forecast
             day_forecast_list.append(hour_forcast)
         
@@ -37,7 +46,7 @@ def build_forecast_list(forecast_dict):
 
 def build_forecast_df(forecast_list):
     # ============================================================================= Convert List into a Dataframe
-    columns = ['daydate','time', 'size', 'primary_swell','swell_period','wind_speed1','wind_speed2','wind_metrics', 'temperature','probability']
+    columns = ['daydate','time', 'size', 'primary_swell','swell_period','wind_speed1','wind_speed2','wind_metrics', 'temperature','probability','wind_synopsis']
     weekly_dataframe = pd.DataFrame(columns=columns)
     for i in range (7):
         df = pd.DataFrame(forecast_list[i], columns = columns)
@@ -150,7 +159,7 @@ def add_day_of_week(dataframe):
     return dataframe
 
 def filter_to_relevant_cols(dataframe):
-    dataframe = dataframe[['daydate','time','size','swell_period','wind','total_rating','day_of_week']]
+    dataframe = dataframe[['daydate','time','size','swell_period','wind','total_rating','day_of_week','wind_synopsis']]
     return dataframe
 
 def sort_by_high_rating(dataframe):
