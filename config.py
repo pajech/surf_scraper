@@ -18,3 +18,5 @@ scraper_config = {
         'weekly_forecast_list'  :[]
     }
 }
+
+email_body = {}

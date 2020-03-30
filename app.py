@@ -1,20 +1,26 @@
-from config import scraper_config
+from config import scraper_config, email_body
 from processor import run_core_processes
-from email_builder import build_email_body
+from email_builder import build_email_body, initialise_email
 
 import ezgmail
 
-run_core_processes(scraper_config, 'Torquay')
-run_core_processes(scraper_config, 'JanJuc')
+initialise_email()
 
-ezgmail.init()
+for key in scraper_config:
 
-email_body = {}
-email_body['Torquay'] = build_email_body(scraper_config['Torquay']['weekly_dataframe'])
-email_body['JanJuc'] = build_email_body(scraper_config['JanJuc']['weekly_dataframe'])
+    run_core_processes(scraper_config, key)
+    email_body[key] = build_email_body(scraper_config[key]['weekly_dataframe'])
+    ezgmail.send('paulychynoweth@gmail.com', key+' Surf Report', email_body[key], [key+'SurfReport.csv'])
+# run_core_processes(scraper_config, 'JanJuc')
 
-ezgmail.send('paulychynoweth@gmail.com', 'Surf Report', email_body['Torquay'], ['TorquaySurfReport.csv'])
-ezgmail.send('paulychynoweth@gmail.com', 'Surf Report', email_body['JanJuc'], ['JanJucSurfReport.csv'])
+
+
+
+# email_body['Torquay'] = build_email_body(scraper_config['Torquay']['weekly_dataframe'])
+# email_body['JanJuc'] = build_email_body(scraper_config['JanJuc']['weekly_dataframe'])
+
+# ezgmail.send('paulychynoweth@gmail.com', 'Surf Report', email_body['Torquay'], ['TorquaySurfReport.csv'])
+# ezgmail.send('paulychynoweth@gmail.com', 'Surf Report', email_body['JanJuc'], ['JanJucSurfReport.csv'])
 
 
 # To Do List:

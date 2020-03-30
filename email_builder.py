@@ -43,3 +43,5 @@ def build_email_body(dataframe):
     return str_email_all
 
 
+def initialise_email():
+    ezgmail.init()
