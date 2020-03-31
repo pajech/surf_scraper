@@ -1,8 +1,9 @@
 import ezgmail
 import time
+import pandas as pd
 
 from config import scraper_config, email_body
-from processor import run_core_processes
+from processor import run_core_processes, extract_all_beach_dataframes
 from email_builder import build_email_body, initialise_email
 from logger import log_application_header,log_application_footer, log_core_process_start_and_finish
 
@@ -15,6 +16,13 @@ initialise_email()
 
 for key in scraper_config:
     run_core_processes(scraper_config, key)
+
+
+
+scraper_config = extract_all_beach_dataframes(scraper_config, 'All')
+
+
+for key in scraper_config:
     email_body[key] = build_email_body(scraper_config[key]['weekly_dataframe'])
     ezgmail.send('paulychynoweth@gmail.com', key+' Surf Report', email_body[key], [key+'SurfReport.csv'])
 
@@ -34,7 +42,6 @@ log_application_footer(application_start_time)
 
 # To Do List:
 # - Add in snowboarding
-# - Add in decorative functions
 # - Add in try and logging functions
 # - Add in a list of emails
 # - Create classes for each user and what they are opted in for
@@ -46,6 +53,9 @@ log_application_footer(application_start_time)
 # - incorporate wind sysnopsis into the rating system (i.e. minus 2 for onshore)
 # - Add in different websites to compare
 # - Get them to work asyncronously
+# - Fix decorative functions
+# - create an all files folder so you can just git ignore that, as opposed to each individual beach
 
 # Done
 # - x - Currently just Torquay but would like to expand it to other surf locations - x
+# - x - Add in decorative functions - x

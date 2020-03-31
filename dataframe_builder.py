@@ -186,3 +186,15 @@ def sort_by_high_rating(dataframe):
 def filter_out_nocturnal_times(dataframe):
     dataframe = dataframe[dataframe['time'].isin(['6am','9am','Noon','3pm'])]
     return dataframe
+
+@log_start_and_finish
+def add_in_beach_name(dataframe, beach):
+    dataframe['beach'] = beach
+    return dataframe
+
+def concatenate_dataframes(dict_of_dataframes, df_name):
+    list_of_dataframes = []
+    for key in dict_of_dataframes:
+        list_of_dataframes.append(dict_of_dataframes[key][df_name])
+    final_dataframe = pd.concat(list_of_dataframes, ignore_index = True, sort = False)
+    return final_dataframe
