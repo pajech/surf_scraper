@@ -1,6 +1,7 @@
 import pandas as pd
+from logger import log_start_and_finish
 
-
+@log_start_and_finish
 def build_forecast_dict(soup_object):
     weekly_forecast_dict = {}
     for i in range (1,8):
@@ -9,6 +10,7 @@ def build_forecast_dict(soup_object):
     
     return weekly_forecast_dict
 
+@log_start_and_finish
 def build_forecast_list(forecast_dict):
     weekly_forecast_list = []
     for key in forecast_dict:
@@ -44,6 +46,7 @@ def build_forecast_list(forecast_dict):
     
     return weekly_forecast_list
 
+@log_start_and_finish
 def build_forecast_df(forecast_list):
     # ============================================================================= Convert List into a Dataframe
     columns = ['daydate','time', 'size', 'primary_swell','swell_period','wind_speed1','wind_speed2','wind_metrics', 'temperature','probability','wind_synopsis']
@@ -55,11 +58,13 @@ def build_forecast_df(forecast_list):
     
     return weekly_dataframe
 
+@log_start_and_finish
 def add_wind_metrics(dataframe):
     #Check to see if winds exist here
     dataframe['wind'] = dataframe['wind_speed1'] +'-'+ dataframe['wind_speed2'] + ' '+ dataframe['wind_metrics'] 
     return dataframe
 
+@log_start_and_finish
 def add_day_date(dataframe):
     # Add Try and Logging
     day_date_split = dataframe["daydate"].str.split("(\d\d\d\d)", n = 1, expand = True) 
@@ -67,21 +72,25 @@ def add_day_date(dataframe):
     dataframe['date'] = day_date_split[1]
     return dataframe
 
+@log_start_and_finish
 def add_size_of_wave(dataframe):
     dataframe['size_of_wave'] = dataframe['primary_swell'].str.split("ft", n=1, expand = True)[0]
     dataframe['size_of_wave'] = dataframe['size_of_wave'].astype('float')
     return dataframe
 
+@log_start_and_finish
 def add_wind_speed(dataframe):
     dataframe['wind_speed1'] = dataframe['wind_speed1'].astype('int')
     dataframe['wind_speed2'] = dataframe['wind_speed2'].astype('int')
     return dataframe
 
+@log_start_and_finish
 def add_swell_period(dataframe):
     dataframe['swell_period_int'] = dataframe['swell_period'].str.split("s", n=1, expand = True)[0]
     dataframe['swell_period_int'] = dataframe['swell_period_int'].astype('int')
     return dataframe
 
+@log_start_and_finish
 def add_swell_height_rating(dataframe):
     def add_rating(row):
         swell_height = row['size_of_wave']
@@ -108,6 +117,7 @@ def add_swell_height_rating(dataframe):
     dataframe['heigh_rating']=dataframe.apply(lambda row: add_rating (row), axis="columns")
     return dataframe
 
+@log_start_and_finish
 def add_swell_period_rating(dataframe):
     def add_rating(row):
         swell_period = row['swell_period_int']
@@ -126,6 +136,7 @@ def add_swell_period_rating(dataframe):
     dataframe['swellperiod_rating']=dataframe.apply(lambda row: add_rating (row), axis="columns")
     return dataframe
 
+@log_start_and_finish
 def add_wind_rating(dataframe):
     def add_rating(row):
         wind_speed = row['wind_speed2']
@@ -146,26 +157,32 @@ def add_wind_rating(dataframe):
     dataframe['wind_rating']=dataframe.apply(lambda row: add_rating(row), axis="columns")
     return dataframe
 
+@log_start_and_finish
 def add_total_rating(dataframe):
     dataframe['total_rating'] = dataframe['wind_rating'] + dataframe['swellperiod_rating'] + dataframe['heigh_rating']
     return dataframe
 
+@log_start_and_finish
 def filter_to_high_rating(dataframe):
     dataframe = dataframe[dataframe['total_rating']>15]
     return dataframe
 
+@log_start_and_finish
 def add_day_of_week(dataframe):
     dataframe['day_of_week'] = dataframe['daydate'].str.split(r'[0-9]', expand=True)
     return dataframe
 
+@log_start_and_finish
 def filter_to_relevant_cols(dataframe):
     dataframe = dataframe[['daydate','time','size','swell_period','wind','total_rating','day_of_week','wind_synopsis']]
     return dataframe
 
+@log_start_and_finish
 def sort_by_high_rating(dataframe):
     dataframe = dataframe.sort_values(by='total_rating', ascending = False)
     return dataframe
 
+@log_start_and_finish
 def filter_out_nocturnal_times(dataframe):
     dataframe = dataframe[dataframe['time'].isin(['6am','9am','Noon','3pm'])]
     return dataframe

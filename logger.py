@@ -80,3 +80,71 @@ def log_application_footer(start_time):
     print_line_of_equals()
     print(      'FINISHED PROCESSING @', datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), '- total load time =', time_difference_seconds, 'seconds  - ', time_difference_minutes, 'minutes' )
     print_line_of_equals()
+
+
+def log_start_and_finish(func):
+    ''' Function needs to input campaign, dictionary_of_dfs, df_name
+    then output either dictionary_of_dfs or tuple with dictionary_of_dfs and error message
+    '''
+    def log_process_start_and_finish(*args, **kwargs):
+        try:
+            process_start_time = time.time()
+            log_process_start(func.__name__)
+            result = func(*args, **kwargs)
+            if type(result) == tuple:
+                result, message = result[0], result[1] if result[1] is not None else 'Completed'
+                log_process_end(func.__name__, process_start_time, result=message )
+            else:
+                log_process_end(func.__name__, process_start_time)
+
+            return result
+        except Exception as error: log_process_end(func.__name__, process_start_time, None, error_message=str(error) ); raise error
+    return log_process_start_and_finish
+
+def log_process_start( object_name ):
+    if len(str( object_name )) > ( 46 ):  
+        display_name = str( object_name )[:42] + '...'
+    else :
+        display_name = str( object_name )
+    
+    print( display_name.ljust( tab1 ), end ='')
+
+
+def log_process_end( process_name, process_start_time, result='Completed', error_message=None ):
+    current_time = time.time()
+    diff = str ( round( ( current_time - process_start_time ), 3 ) )
+    time_difference = ( '.'.join(map('{0:0>3}'.format, diff.split('.'))) )
+
+    if error_message is not None:
+        result = color_text('-FAILURE-', 'red')
+    elif result == 'Unavailable':
+        result = color_text(result, 'purple')
+    elif result.startswith('n/a'):
+        result = color_text(result, 'blue')
+    else:
+        result = color_text(result, None)
+
+    # else :
+    number_of_rows      = str( 'n/a' )
+    number_of_columns   = str( 'n/a' )
+
+    print(
+            result, 
+            process_name.ljust( tab3 - 1 ),  
+            number_of_rows.ljust( tab4 - 1 ),  
+            number_of_columns.ljust( tab5 - 1 ), 
+            'seconds = ' + str ( time_difference ) 
+            )
+    if error_message is not None:
+        print ( error_message )
+
+def color_text(text, color):
+    if color == 'red':
+        return '\033[31m' + text.ljust( tab2 ) + '\033[0m'
+    elif color == 'purple':
+        return '\033[31m' + text.ljust( tab2 ) + '\033[0m'
+    elif color == 'blue':
+        return '\033[35m' + text.ljust( tab2 ) + '\033[0m'
+    elif color is None:
+        return text.ljust( tab2 )
+    else: raise NotImplementedError(f"We do not support color {color}")
