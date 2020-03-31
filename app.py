@@ -14,7 +14,6 @@ application_start_time = time.time()
 initialise_email()
 
 for key in scraper_config:
-
     run_core_processes(scraper_config, key)
     email_body[key] = build_email_body(scraper_config[key]['weekly_dataframe'])
     ezgmail.send('paulychynoweth@gmail.com', key+' Surf Report', email_body[key], [key+'SurfReport.csv'])

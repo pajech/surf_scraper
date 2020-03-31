@@ -28,10 +28,10 @@ def print_line_of_equals(): print('='*line_length)
 
 
 def log_core_process_start_and_finish(func):
-    def log_core_process_start_and_finish_decorator(beach, *args, **kwargs):
+    def log_core_process_start_and_finish_decorator(dict_of_beaches, beach, *args, **kwargs):
         core_process_start_time = time.time()
         log_core_process_header(beach, func.__name__)
-        result = func(beach, *args, **kwargs)
+        result = func(dict_of_beaches, beach, *args, **kwargs)
         log_core_process_footer(func.__name__, core_process_start_time)
         return result
     return log_core_process_start_and_finish_decorator
@@ -39,7 +39,7 @@ def log_core_process_start_and_finish(func):
 
 def log_core_process_header( beach, core_process ):
     print_line_of_dashes()
-    print (core_process,  ' - ', beach)
+    print (core_process, ' - ', beach )
     print( col_headings )
     print_line_of_dashes()
 
