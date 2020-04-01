@@ -23,9 +23,9 @@ scraper_config = extract_all_beach_dataframes(scraper_config, 'All')
 
 
 for key in scraper_config:
-    email_body[key] = build_email_body(scraper_config[key]['weekly_dataframe'])
     for contact in list_of_subscribers:
         if key in contact.beach_preferences:
+            email_body[key] = build_email_body(scraper_config[key]['weekly_dataframe'], contact.name)
             ezgmail.send(contact.email, key+' Surf Report', email_body[key], [key+'SurfReport.csv'])
 
 log_application_footer(application_start_time)

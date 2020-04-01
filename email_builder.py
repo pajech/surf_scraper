@@ -1,8 +1,8 @@
 import ezgmail
 
 
-def build_email_body(dataframe):
-    str_email_start = 'Hey Roost, the best times for a shred this week are: \n \n'
+def build_email_body(dataframe, contact_name):
+    str_email_start = 'Hey {Name}, the best times for a shred this week are: \n \n'.format(Name = contact_name)
     str_email_middle = ''
     for i in range(5):
         j = i + 1
