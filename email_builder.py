@@ -5,8 +5,10 @@ def build_email_body(dataframe):
     str_email_start = 'Hey Roost, the best times for a shred this week are: \n \n'
     str_email_middle = ''
     for i in range(5):
-        str_interim = """{Weekday} {Time} at {Beach}. \n This is the height: {Height}, the period: {Period} and the wind: {Wind} (it is {Synopsis}). 
+        j = i + 1
+        str_interim = """{Number}. {Weekday} {Time} at {Beach}. \n This is the height: {Height}, the period: {Period} and the wind: {Wind} (it is {Synopsis}). 
         It scored an overall rating of {Rating}/30 \n \n""".format(
+                                                        Number      = j,
                                                         Weekday     = dataframe['day_of_week'].iloc[i],
                                                         Time        = dataframe['time'].iloc[i],
                                                         Height      = dataframe['size'].iloc[i],

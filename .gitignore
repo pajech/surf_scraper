@@ -8,6 +8,7 @@ token.json
 TorquaySurfReport.csv
 JanJucSurfReport.csv
 AllSurfReport.csv
+BellsSurfReport.csv
 
 # C extensions
 *.so
