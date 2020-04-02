@@ -44,7 +44,7 @@ log_application_footer(application_start_time)
 
 
 # To Do List:
-# - Add in snowboarding
+# - Add in snowboarding (This site - https://opensnow.com/location/cawhistler or this site https://www.snow-forecast.com/resorts/Whistler-Blackcomb/6day/mid)
 # - Add in try and logging functions
 # - Add in a list of emails
 # - Add in Airflow https://towardsdatascience.com/getting-started-with-apache-airflow-df1aa77d7b1b
