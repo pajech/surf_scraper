@@ -10,6 +10,7 @@ from dataframe_builder import add_day_date, add_size_of_wave, add_wind_speed, ad
 from dataframe_builder import add_swell_period_rating, add_wind_rating, add_day_of_week, add_total_rating
 from dataframe_builder import filter_to_high_rating, filter_to_relevant_cols, filter_out_nocturnal_times, sort_by_high_rating, add_in_beach_name,concatenate_dataframes
 from logger            import log_core_process_start_and_finish, log_core_process_header
+from exporter          import export_local
 
 @log_core_process_start_and_finish
 def run_core_processes(dict_of_beaches, beach):
@@ -32,7 +33,8 @@ def run_core_processes(dict_of_beaches, beach):
     dict_of_beaches[beach]['weekly_dataframe']       = filter_to_relevant_cols(dict_of_beaches[beach]['weekly_dataframe'])
     dict_of_beaches[beach]['weekly_dataframe']       = filter_out_nocturnal_times(dict_of_beaches[beach]['weekly_dataframe'])
     dict_of_beaches[beach]['weekly_dataframe']       = add_in_beach_name(scraper_config[beach]['weekly_dataframe'], beach)
-    dict_of_beaches[beach]['weekly_dataframe'].to_csv(beach+'SurfReport.csv', index = False)
+    export_local(dict_of_beaches[beach]['weekly_dataframe'], beach)
+    # dict_of_beaches[beach]['weekly_dataframe'].to_csv(beach+'SurfReport.csv', index = False)
     dict_of_beaches[beach]['weekly_dataframe']       = sort_by_high_rating(dict_of_beaches[beach]['weekly_dataframe'])
     return dict_of_beaches
 
@@ -42,7 +44,8 @@ def extract_all_beach_dataframes(dict_of_beaches, beach):
     scraper_config[beach]['weekly_dataframe']           = pd.DataFrame()
     dict_of_beaches[beach]['weekly_dataframe']           =  concatenate_dataframes(dict_of_beaches, 'weekly_dataframe')
     dict_of_beaches[beach]['weekly_dataframe']          = sort_by_high_rating(dict_of_beaches[beach]['weekly_dataframe'])
-    dict_of_beaches[beach]['weekly_dataframe'].to_csv('All'+'SurfReport.csv', index = False)
+    export_local(dict_of_beaches[beach]['weekly_dataframe'], beach)
+    # dict_of_beaches[beach]['weekly_dataframe'].to_csv('All'+'SurfReport.csv', index = False)
     return dict_of_beaches
 
 

@@ -50,4 +50,4 @@ Choy = EmailSubscriber(
     ["All"]
 )
 
-list_of_subscribers = [Paul, Choy]
+list_of_subscribers = [Paul]

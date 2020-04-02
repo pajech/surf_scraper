@@ -6,6 +6,7 @@ from config import scraper_config, email_body, list_of_subscribers
 from processor import run_core_processes, extract_all_beach_dataframes
 from email_builder import build_email_body, initialise_email
 from logger import log_application_header,log_application_footer, log_core_process_start_and_finish
+from exporter import local_folder_table_dumps
 
 
 log_application_header()
@@ -26,7 +27,7 @@ for key in scraper_config:
     for contact in list_of_subscribers:
         if key in contact.beach_preferences:
             email_body[key] = build_email_body(scraper_config[key]['weekly_dataframe'], contact.name)
-            ezgmail.send(contact.email, key+' Surf Report', email_body[key], [key+'SurfReport.csv'])
+            ezgmail.send(contact.email, key+' Surf Report', email_body[key], [local_folder_table_dumps+'/'+key+'SurfReport.csv'])
 
 log_application_footer(application_start_time)
 
@@ -46,7 +47,6 @@ log_application_footer(application_start_time)
 # - Add in snowboarding
 # - Add in try and logging functions
 # - Add in a list of emails
-# - Create classes for each user and what they are opted in for
 # - Add in Airflow https://towardsdatascience.com/getting-started-with-apache-airflow-df1aa77d7b1b
 # - Change the ELIF statements and apply methods
 # - What if the DF is empty? Both when extracted and when you send the email?
@@ -56,8 +56,10 @@ log_application_footer(application_start_time)
 # - Add in different websites to compare
 # - Get them to work asyncronously
 # - Fix decorative functions
-# - create an all files folder so you can just git ignore that, as opposed to each individual beach
+
 
 # Done
 # - x - Currently just Torquay but would like to expand it to other surf locations - x
 # - x - Add in decorative functions - x
+# - x - Create classes for each user and what they are opted in for - x
+# - x - create an all files folder so you can just git ignore that, as opposed to each individual beach - x

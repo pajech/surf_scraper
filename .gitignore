@@ -9,6 +9,7 @@ TorquaySurfReport.csv
 JanJucSurfReport.csv
 AllSurfReport.csv
 BellsSurfReport.csv
+beach_files/
 
 # C extensions
 *.so
