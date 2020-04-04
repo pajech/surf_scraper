@@ -40,7 +40,7 @@ Paul = EmailSubscriber(
     "Pauly",
     "C",
     "paulychynoweth@gmail.com",
-    ["JanJuc","Bells"]
+    ['All']
 )
 
 Choy = EmailSubscriber(

@@ -31,17 +31,6 @@ for key in scraper_config:
 
 log_application_footer(application_start_time)
 
-# run_core_processes(scraper_config, 'JanJuc')
-
-
-
-
-# email_body['Torquay'] = build_email_body(scraper_config['Torquay']['weekly_dataframe'])
-# email_body['JanJuc'] = build_email_body(scraper_config['JanJuc']['weekly_dataframe'])
-
-# ezgmail.send('paulychynoweth@gmail.com', 'Surf Report', email_body['Torquay'], ['TorquaySurfReport.csv'])
-# ezgmail.send('paulychynoweth@gmail.com', 'Surf Report', email_body['JanJuc'], ['JanJucSurfReport.csv'])
-
 
 # To Do List:
 # - Add in snowboarding (This site - https://opensnow.com/location/cawhistler or this site https://www.snow-forecast.com/resorts/Whistler-Blackcomb/6day/mid)
