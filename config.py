@@ -23,6 +23,20 @@ scraper_config = {
         'soup_object'           :None,
         'weekly_forecast_dict'  :{},
         'weekly_forecast_list'  :[]
+    },
+    'Scamander':{
+        'url'                   :'https://magicseaweed.com/Scamander-Surf-Report/734/',
+        'response'              :None,
+        'soup_object'           :None,
+        'weekly_forecast_dict'  :{},
+        'weekly_forecast_list'  :[]
+    },
+    'ShipsternBluff':{
+        'url'                   :'https://magicseaweed.com/Shipstern-Bluff-Surf-Report/537/',
+        'response'              :None,
+        'soup_object'           :None,
+        'weekly_forecast_dict'  :{},
+        'weekly_forecast_list'  :[]
     }
 
 }
@@ -50,4 +64,11 @@ Choy = EmailSubscriber(
     ["All"]
 )
 
-list_of_subscribers = [Paul]
+Rob = EmailSubscriber(
+    "Robby",
+    "Hay",
+    "rob@blueswoop.com",
+    ["Scamander","ShipsternBluff "]
+)
+
+list_of_subscribers = [Paul, Rob]
