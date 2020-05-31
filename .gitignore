@@ -10,6 +10,12 @@ JanJucSurfReport.csv
 AllSurfReport.csv
 BellsSurfReport.csv
 beach_files/
+secrets.py
+testing.ipynb
+magicseaweed
+config.py
+snow_api_testing.ipynb
+snow_api_testing.py
 
 # C extensions
 *.so

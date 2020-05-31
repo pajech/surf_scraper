@@ -41,34 +41,71 @@ scraper_config = {
 
 }
 
+scraper_config_snow = {
+    'Whistler':{
+        'url'                   :'https://www.snow-forecast.com/resorts/Whistler-Blackcomb/6day/mid',
+        'response'              :None,
+        'soup_object'           :None,
+        'weekly_forecast_dict'  :{},
+        'weekly_forecast_list'  :[]
+    },
+
+    'Thredbo':{
+        'url'                   :'https://www.snow-forecast.com/resorts/Thredbo/6day/mid',
+        'response'              :None,
+        'soup_object'           :None,
+        'weekly_forecast_dict'  :{},
+        'weekly_forecast_list'  :[]
+    },
+
+}
+
 email_body = {}
+email_body_snow = {}
 
 class EmailSubscriber:
-    def __init__(self, name, surname, email, beach_preferences):
+    def __init__(self, name, surname, email, beach_preferences, snow_preferences):
         self.name               = name
         self.surnamme           = surname
         self.email              = email
         self.beach_preferences  = beach_preferences
+        self.snow_preferences   = snow_preferences
 
 Paul = EmailSubscriber(
     "Pauly",
     "C",
     "paulychynoweth@gmail.com",
-    ['All']
+    ['All'],
+    ['Thredbo', 'Whistler']
 )
 
 Choy = EmailSubscriber(
     "Cho'y",
     "Richardson",
     "emmett.richardson@hotmail.com",
-    ["All"]
+    ["All"],
+    ['Thredbo']
+)
+
+Ben = EmailSubscriber(
+    "Benny",
+    "Carter",
+    "cartbg@gmail.com",
+    ["All"],
+    ['Thredbo']
 )
 
 Rob = EmailSubscriber(
     "Robby",
     "Hay",
     "rob@blueswoop.com",
-    ["Scamander","ShipsternBluff "]
+    ["Scamander","ShipsternBluff "],
+    ['Thredbo']
 )
 
-list_of_subscribers = [Paul, Rob]
+list_of_subscribers = [
+    Paul, 
+    # Rob, 
+    # Choy,
+    # Ben
+    ]
