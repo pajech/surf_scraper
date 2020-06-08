@@ -6,7 +6,7 @@ sys.path.insert(1, '/Users/paul.chynoweth/git_repo/surf_scraper')
 
 
 from config import scraper_config, email_body, email_body_snow, list_of_subscribers, scraper_config_snow, api_key
-from processor import run_beach_process, extract_all_beach_dataframes, run_snow_process
+from html_surf.processor import run_beach_process, extract_all_beach_dataframes
 from email_builder import build_email_body, initialise_email, build_email_body_snow
 from logger import log_application_header,log_application_footer, log_core_process_start_and_finish
 from exporter import local_folder_table_dumps
