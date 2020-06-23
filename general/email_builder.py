@@ -1,5 +1,6 @@
 import ezgmail
-from dataframe_builder import sort_by_high_rating
+from general.dataframe_builder import sort_by_high_rating
+import os
 
 
 def build_email_body(dataframe, contact_name):
@@ -56,6 +57,7 @@ def build_email_body(dataframe, contact_name):
 
 
 def initialise_email():
+    os.chdir('/Users/paul.chynoweth/git_repo/surf_scraper')
     ezgmail.init()
 
 

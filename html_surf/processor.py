@@ -1,11 +1,11 @@
 import pandas as pd
 import time
 
-from html_scraper import extract_url, extract_html
-from config import scraper_config
-from dataframe_builder import *
-from logger            import log_core_process_start_and_finish, log_core_process_header
-from exporter          import export_local
+from general.html_scraper import extract_url, extract_html
+from general.config import scraper_config
+from general.dataframe_builder import *
+from general.logger            import log_core_process_start_and_finish, log_core_process_header
+from general.exporter          import export_local
 
 
 @log_core_process_start_and_finish

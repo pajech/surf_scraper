@@ -2,6 +2,7 @@ import ezgmail
 import time
 import pandas as pd
 import sys
+import os
 sys.path.insert(1, '/Users/paul.chynoweth/git_repo/surf_scraper')
 
 from general.html_scraper import extract_url
@@ -24,7 +25,7 @@ for key in scraper_config_snow:
     for contact in list_of_subscribers:
         if key in contact.snow_preferences:
             email_body_snow[key] = build_email_body_snow(key, scraper_config_snow[key]['dataframe'], contact.name)
-            ezgmail.send(contact.email, key+' Snow Report', email_body_snow[key], [local_folder_table_dumps+'/'+key+'SnowReport.csv'])
+            ezgmail.send(contact.email, key+' Snow Report', email_body_snow[key], local_folder_table_dumps+'/'+key+'SnowReport.csv')
 
 
 log_application_footer(application_start_time)

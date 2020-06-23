@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from logger import log_start_and_finish
+from general.logger import log_start_and_finish
 from string import printable
 from datetime import timedelta
 
