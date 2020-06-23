@@ -400,3 +400,12 @@ def add_snowfall_synopsis(dataframe):
     'Fuck All')))
     return dataframe
 
+
+def compile_api_dataframe(forecast_obj):
+    df_new_list = []
+    for i, forecast in enumerate(forecast_obj.data):
+        hourly_dict = forecast.attrs
+        df = pd.DataFrame.from_records(hourly_dict, index=[0])
+        df_new_list.append(df)
+    df_new = pd.concat(df_new_list, sort = False)
+    return df_new
