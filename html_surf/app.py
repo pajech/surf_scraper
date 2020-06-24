@@ -45,12 +45,4 @@ for key in scraper_config:
 
 
 # To Do List:
-# - Add in try and logging functions
-# - Add in Airflow https://towardsdatascience.com/getting-started-with-apache-airflow-df1aa77d7b1b
-# - Change the ELIF statements and apply methods
-# - What if the DF is empty? Both when extracted and when you send the email?
-# - rename columns
-# - incorporate wind sysnopsis into the rating system (i.e. minus 2 for onshore)
-# - Add in different websites to compare
-# - Get them to work asyncronously
-# - Fix decorative functions
+
