@@ -1,4 +1,4 @@
-`import ezgmail
+import ezgmail
 from general.dataframe_builder import sort_by_high_rating
 import os
 
