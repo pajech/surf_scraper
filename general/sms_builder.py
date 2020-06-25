@@ -1,5 +1,6 @@
 import requests
 from general.dataframe_builder import sort_by_high_rating
+from general.config import sms_key, sms_secret
 
 def telstra_request(endpoint, body=None, headers=None, *, token=None, method='POST'):
     send_headers = {
@@ -46,6 +47,8 @@ def send_sms(token, to, body):
     return response_json
 
 
+token = auth(sms_key, sms_secret)
+
 def build_sms_body(dataframe, contact_name):
     str_sms_start = '{Name}, the best times for a shred this week are:\n\n'.format(Name = contact_name)
     str_sms_middle = ''
@@ -90,3 +93,36 @@ def build_sms_body(dataframe, contact_name):
     str_sms_all = str_sms_start + str_sms_middle + str_weekend + str_sms_end
     print(str_sms_all)
     return str_sms_all
+
+
+
+def build_sms_body_snow(key,dataframe, contact_name):
+    sms_start='{Name}, this is a snow update for {Resort} ski resort(s). \n\n\n'.format(Name=contact_name,
+                                                                                    Resort = key)
+    
+    dataframe_snow = dataframe[dataframe['snowfall']>0].copy()
+
+    if len(dataframe_snow) > 0:
+        sms_middle = 'There is some snowfall this week!!'
+        for i in range(len(dataframe_snow)):
+            sms_middle = sms_middle + ' On {day_of_week}, it\'s a balmy {temp} degrees and it\'s snowing a {snow_synopsis} amount. There is {snowfall_cm}cm in snow and {rain_ml}ml in rain. The wind is at {wind_speed}km/h and the freezing level is {freezing_level_synopsis}. \n\n'.format(
+                day_of_week = dataframe_snow['day_of_week'].iloc[i],
+                temp = dataframe_snow['temp'].iloc[i],
+                snow_synopsis = dataframe_snow['snowfall_synopsis'].iloc[i],
+                snowfall_cm = dataframe_snow['snowfall'].iloc[i],
+                rain_ml = dataframe_snow['rain'].iloc[i],
+                wind_speed = dataframe_snow['wind'].iloc[i],
+                freezing_level_synopsis = dataframe_snow['freezing_level_synopsis'].iloc[i],
+            )
+        
+        sms_end = '\n\n\n Happy Shredding mate!'
+
+    
+        str_sms_all = sms_start + sms_middle + sms_end
+
+        print(str_sms_all)
+
+        return str_sms_all
+
+    else:
+        return None

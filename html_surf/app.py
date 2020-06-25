@@ -20,6 +20,7 @@ application_start_time = time.time()
 
 # Scraper:
 initialise_email()
+create_subscription(token)
 
 for key in scraper_config:
     run_beach_process(scraper_config, key)
@@ -29,12 +30,10 @@ scraper_config = extract_all_beach_dataframes(scraper_config, 'All')
 for key in scraper_config:
     for contact in list_of_subscribers:
         if key in contact.beach_preferences:
-            # email_body[key] = build_email_body(scraper_config[key]['weekly_dataframe'], contact.name)
+            email_body[key] = build_email_body(scraper_config[key]['weekly_dataframe'], contact.name)
+            ezgmail.send(contact.email, key+' Surf Report', email_body[key], [local_folder_table_dumps+'/'+key+'SurfReport.csv'])
+
             sms_body[key] = build_sms_body(scraper_config[key]['weekly_dataframe'], contact.name)
-            
-            # ezgmail.send(contact.email, key+' Surf Report', email_body[key], [local_folder_table_dumps+'/'+key+'SurfReport.csv'])
-            token = auth(sms_key, sms_secret)
-            create_subscription(token)
             send_sms(token, contact.phone_number, sms_body[key])
 
 
