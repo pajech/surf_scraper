@@ -27,12 +27,12 @@ for key in scraper_config_snow:
 for key in scraper_config_snow:
     for contact in list_of_subscribers:
         if key in contact.snow_preferences:
-            email_body_snow[key] = build_email_body_snow(key, scraper_config_snow[key]['dataframe'], contact.name)
+            email_body_snow[key] = build_email_body_snow(key, scraper_config_snow[key]['dataframe'], contact.name,scraper_config_snow[key]['mountain_snowfall'] )
             ezgmail.send(contact.email, key+' Snow Report', email_body_snow[key], local_folder_table_dumps+'/'+key+'SnowReport.csv')
 
-            sms_body_snow[key] = build_sms_body_snow(key, scraper_config_snow[key]['dataframe'], contact.name)
-            if sms_body_snow[key] != None:
-                send_sms(token, contact.phone_number, sms_body_snow[key])   
+            sms_body_snow[key] = build_sms_body_snow(key, scraper_config_snow[key]['dataframe'], contact.name, scraper_config_snow[key]['mountain_snowfall'] )
+            # if sms_body_snow[key] != None:
+            #     send_sms(token, contact.phone_number, sms_body_snow[key])   
 
 log_application_footer(application_start_time)
 

@@ -10,6 +10,7 @@ from general.exporter          import export_local
 def run_snow_process(dict_of_resorts, resort):
     dict_of_resorts[resort]['response']                                                        = extract_url(dict_of_resorts[resort]['url']) 
     dict_of_resorts[resort]['soup_object']                                                     = extract_html(dict_of_resorts[resort]['response'])
+    dict_of_resorts[resort]['mountain_snowfall']                                               = add_mountain_snowfall(dict_of_resorts[resort]['soup_object'])
     dict_of_resorts[resort]['weekly_forecast_list'], dict_of_resorts[resort]['date_remap']     = generate_weekly_dict(dict_of_resorts[resort]['soup_object'])
     dict_of_resorts[resort]['dataframe']                                                       = convert_list_to_df(dict_of_resorts[resort]['weekly_forecast_list'])
     dict_of_resorts[resort]                                                                    = add_date(dict_of_resorts[resort])
