@@ -3,6 +3,7 @@ import numpy as np
 from general.logger import log_start_and_finish
 from string import printable
 from datetime import timedelta
+import re
 
 @log_start_and_finish
 def build_forecast_dict(soup_object):
@@ -409,3 +410,18 @@ def compile_api_dataframe(forecast_obj):
         df_new_list.append(df)
     df_new = pd.concat(df_new_list, sort = False)
     return df_new
+
+def add_mountain_snowfall(soup_object):
+    list_of_updates = {}
+
+    for i in range (1,4):
+
+        relevant_metric = re.split('(—)|(-?\d*\.?\d+)',soup_object.findAll('table', class_ = 'snow-depths-table__table')[0].text.split(':')[i])[2]
+        if relevant_metric == None:
+            list_of_updates[i] = '0'
+        else:
+            list_of_updates[i] = relevant_metric
+    
+    list_of_updates[4] = soup_object.findAll('table', class_ = 'snow-depths-table__table')[0].findAll('td')[3].text
+
+    return list_of_updates

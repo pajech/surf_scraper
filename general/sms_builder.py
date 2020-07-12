@@ -96,8 +96,12 @@ def build_sms_body(dataframe, contact_name):
 
 
 
-def build_sms_body_snow(key,dataframe, contact_name):
-    sms_start='{Name}, this is a snow update for {Resort} ski resort(s). \n\n\n'.format(Name=contact_name,
+def build_sms_body_snow(key,dataframe, contact_name, snow_depth_dict):
+    sms_start='{Name}, this is a snow update for {Resort} ski resort(s). The snow depth is {Top}cm at the top, {Bottom}cm at base. The most recent snowfall ({Recent}cm) was on {SnowDate} \n\n\n'.format(Name=contact_name,
+                                                                                    Top = snow_depth_dict[1],
+                                                                                    Bottom = snow_depth_dict[2],
+                                                                                    Recent = snow_depth_dict[3],
+                                                                                    SnowDate = snow_depth_dict[4],
                                                                                     Resort = key)
     
     dataframe_snow = dataframe[dataframe['snowfall']>0].copy()

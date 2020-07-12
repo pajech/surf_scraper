@@ -61,8 +61,13 @@ def initialise_email():
     ezgmail.init()
 
 
-def build_email_body_snow(key,dataframe, contact_name):
-    email_start='Hey {Name}, attached is this weeks snow report for {Resort} ski resort(s). \n\n\n'.format(Name=contact_name,
+def build_email_body_snow(key,dataframe, contact_name, snow_depth_dict):
+    email_start='Hey {Name}, attached is this weeks snow report for {Resort} ski resort(s). \n The current snow depth is {Top}cm at the top & {Bottom}cm at the base. The most recent snowfall ({Recent}cm) was on {SnowDate}\n\n'.format(Name=contact_name,
+                                                                                    Top = snow_depth_dict[1],
+                                                                                    Bottom = snow_depth_dict[2],
+                                                                                    Recent = snow_depth_dict[3],
+                                                                                    SnowDate = snow_depth_dict[4],
+
                                                                                     Resort = key)
     
     dataframe_snow = dataframe[dataframe['snowfall']>0].copy()
@@ -83,7 +88,7 @@ def build_email_body_snow(key,dataframe, contact_name):
         email_end = '\n\n\n Happy Shredding mate!'
     
     else:
-        email_middle = 'There is fuck all snow this week. '
+        email_middle = 'There is fuck all snow this week.'
         email_end = 'Don\'t bother, go surfing instead. \n'
     
     str_email_all = email_start + email_middle + email_end
