@@ -32,7 +32,7 @@ for key in scraper_config_snow:
 
             sms_body_snow[key] = build_sms_body_snow(key, scraper_config_snow[key]['dataframe'], contact.name)
             if sms_body_snow[key] != None:
-                send_sms(token, contact.phone_number, sms_body_snow[key])
+                send_sms(token, contact.phone_number, sms_body_snow[key])   
 
 log_application_footer(application_start_time)
 

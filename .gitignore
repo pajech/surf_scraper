@@ -17,6 +17,7 @@ config.py
 snow_api_testing.ipynb
 snow_api_testing.py
 sms_api.ipynb
+general/config
 # api_surf/
 # api_snow/
 
