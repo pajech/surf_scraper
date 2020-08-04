@@ -4,7 +4,7 @@ import pandas as pd
 import sys
 import os
 import requests
-sys.path.insert(1, '/Users/paul.chynoweth/git_repo/surf_scraper')
+sys.path.insert(1, os.path.normpath(os.getcwd() + os.sep + os.pardir))
 
 from general.config import scraper_config_snow, snow_api_key, snow_api_secret
 from api_snow.weatherunlocked import get_snow

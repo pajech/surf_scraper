@@ -2,7 +2,9 @@ import ezgmail
 import time
 import pandas as pd
 import sys
-sys.path.insert(1, '/Users/paul.chynoweth/git_repo/surf_scraper')
+import os
+sys.path.insert(1, os.path.normpath(os.getcwd() + os.sep + os.pardir))
+
 import requests
 
 

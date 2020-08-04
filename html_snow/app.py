@@ -3,7 +3,7 @@ import time
 import pandas as pd
 import sys
 import os
-sys.path.insert(1, '/Users/paul.chynoweth/git_repo/surf_scraper')
+sys.path.insert(1, os.path.normpath(os.getcwd() + os.sep + os.pardir))
 
 from general.html_scraper import extract_url
 from general.config import scraper_config, email_body, email_body_snow, sms_body_snow, list_of_subscribers, scraper_config_snow, api_key
@@ -33,6 +33,7 @@ for key in scraper_config_snow:
             sms_body_snow[key] = build_sms_body_snow(key, scraper_config_snow[key]['dataframe'], contact.name, scraper_config_snow[key]['mountain_snowfall'] )
             if sms_body_snow[key] != None:
                 send_sms(token, contact.phone_number, sms_body_snow[key])   
+                
 
 log_application_footer(application_start_time)
 
