@@ -115,14 +115,14 @@ def log_process_end( process_name, process_start_time, result='Completed', error
     diff = str ( round( ( current_time - process_start_time ), 3 ) )
     time_difference = ( '.'.join(map('{0:0>3}'.format, diff.split('.'))) )
 
-    if error_message is not None:
-        result = color_text('-FAILURE-', 'red')
-    elif result == 'Unavailable':
-        result = color_text(result, 'purple')
-    elif result.startswith('n/a'):
-        result = color_text(result, 'blue')
-    else:
-        result = color_text(result, None)
+    # if error_message is not None:
+    #     result = color_text('-FAILURE-', 'red')
+    # elif result == 'Unavailable':
+    #     result = color_text(result, 'purple')
+    # elif result.startswith('n/a'):
+    #     result = color_text(result, 'blue')
+    # else:
+    #     result = color_text(result, None)
 
     # else :
     number_of_rows      = str( 'n/a' )
@@ -138,13 +138,13 @@ def log_process_end( process_name, process_start_time, result='Completed', error
     if error_message is not None:
         print ( error_message )
 
-def color_text(text, color):
-    if color == 'red':
-        return '\033[31m' + text.ljust( tab2 ) + '\033[0m'
-    elif color == 'purple':
-        return '\033[31m' + text.ljust( tab2 ) + '\033[0m'
-    elif color == 'blue':
-        return '\033[35m' + text.ljust( tab2 ) + '\033[0m'
-    elif color is None:
-        return text.ljust( tab2 )
-    else: raise NotImplementedError(f"We do not support color {color}")
+# def color_text(text, color):
+#     if color == 'red':
+#         return '\033[31m' + text.ljust( tab2 ) + '\033[0m'
+#     elif color == 'purple':
+#         return '\033[31m' + text.ljust( tab2 ) + '\033[0m'
+#     elif color == 'blue':
+#         return '\033[35m' + text.ljust( tab2 ) + '\033[0m'
+#     elif color is None:
+#         return text.ljust( tab2 )
+#     else: raise NotImplementedError(f"We do not support color {color}")
