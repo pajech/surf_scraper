@@ -4,7 +4,9 @@ import pandas as pd
 import sys
 import os
 import requests
-sys.path.insert(1, os.path.normpath(os.getcwd() + os.sep + os.pardir))
+import pathlib
+import sys; sys.path.append(pathlib.Path(__file__).parent.absolute().parent.as_posix())
+sys.path.append(pathlib.Path(__file__).parent.absolute().parent.parent.as_posix())
 
 from general.config import scraper_config_snow, snow_api_key, snow_api_secret
 from api_snow.weatherunlocked import get_snow

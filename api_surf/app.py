@@ -3,7 +3,9 @@ import time
 import pandas as pd
 import sys
 import os
-sys.path.insert(1, os.path.normpath(os.getcwd() + os.sep + os.pardir))
+import pathlib
+import sys; sys.path.append(pathlib.Path(__file__).parent.absolute().parent.as_posix())
+sys.path.append(pathlib.Path(__file__).parent.absolute().parent.parent.as_posix())
 
 # Local Libraries
 from api_surf.magicseaweed import MSW_Forecast

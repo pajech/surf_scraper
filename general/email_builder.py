@@ -1,6 +1,9 @@
 import ezgmail
+import pathlib
 from general.dataframe_builder import sort_by_high_rating
 import os
+import sys; sys.path.append(pathlib.Path(__file__).parent.absolute().parent.as_posix())
+sys.path.append(pathlib.Path(__file__).parent.absolute().parent.parent.as_posix())
 
 
 def build_email_body(dataframe, contact_name):
@@ -57,7 +60,8 @@ def build_email_body(dataframe, contact_name):
 
 
 def initialise_email():
-    os.chdir(os.path.normpath(os.getcwd() + os.sep + os.pardir))
+    
+    # os.chdir(os.path.normpath(os.getcwd() + os.sep + os.pardir))
     ezgmail.init()
 
 

@@ -3,7 +3,10 @@ import time
 import pandas as pd
 import sys
 import os
-sys.path.insert(1, os.path.normpath(os.getcwd() + os.sep + os.pardir))
+import pathlib
+# sys.path.insert(1, os.path.normpath(os.getcwd() + os.sep + os.pardir))
+import sys; sys.path.append(pathlib.Path(__file__).parent.absolute().parent.as_posix())
+sys.path.append(pathlib.Path(__file__).parent.absolute().parent.parent.as_posix())
 
 import requests
 
@@ -23,6 +26,7 @@ application_start_time = time.time()
 # Scraper:
 initialise_email()
 create_subscription(token)
+create_bnum(token)
 
 for key in scraper_config:
     run_beach_process(scraper_config, key)

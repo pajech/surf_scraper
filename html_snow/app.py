@@ -3,7 +3,9 @@ import time
 import pandas as pd
 import sys
 import os
-sys.path.insert(1, os.path.normpath(os.getcwd() + os.sep + os.pardir))
+import pathlib
+import sys; sys.path.append(pathlib.Path(__file__).parent.absolute().parent.as_posix())
+sys.path.append(pathlib.Path(__file__).parent.absolute().parent.parent.as_posix())
 
 from general.html_scraper import extract_url
 from general.config import scraper_config, email_body, email_body_snow, sms_body_snow, list_of_subscribers, scraper_config_snow, api_key
@@ -20,6 +22,7 @@ application_start_time = time.time()
 
 initialise_email()
 create_subscription(token)
+create_bnum(token)
 
 for key in scraper_config_snow:
     run_snow_process(scraper_config_snow, key)

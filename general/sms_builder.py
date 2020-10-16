@@ -1,6 +1,6 @@
 import requests
 from general.dataframe_builder import sort_by_high_rating
-from general.config import sms_key, sms_secret
+from general.config import sms_key, sms_secret, bnum_list
 
 def telstra_request(endpoint, body=None, headers=None, *, token=None, method='POST'):
     send_headers = {
@@ -34,6 +34,11 @@ def create_subscription(token):
 
     response_json = response.json()
     return response_json['destinationAddress']
+
+def create_bnum(token):
+    bnumbers = dict(bnum=bnum_list)
+    response = telstra_request("messages/freetrial/bnum",bnumbers, token=token)
+    response_json = response.json()
 
 
 def send_sms(token, to, body):
