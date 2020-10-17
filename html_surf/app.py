@@ -42,7 +42,9 @@ for key in scraper_config:
             sms_body[key] = build_sms_body(scraper_config[key]['weekly_dataframe'], contact.name)
             send_sms(token, contact.phone_number, sms_body[key])
 
-
+for key in scraper_config:
+    os.remove(local_folder_table_dumps+'/'+key+'SurfReport.csv')
+    os.remove(local_folder_table_dumps+'/'+key+'Dict.csv')
 
 
 
