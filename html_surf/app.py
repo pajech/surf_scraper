@@ -26,7 +26,7 @@ application_start_time = time.time()
 # Scraper:
 initialise_email()
 create_subscription(token)
-create_bnum(token)
+# create_bnum(token)
 
 for key in scraper_config:
     run_beach_process(scraper_config, key)

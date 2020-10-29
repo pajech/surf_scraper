@@ -22,7 +22,7 @@ application_start_time = time.time()
 
 initialise_email()
 create_subscription(token)
-create_bnum(token)
+# create_bnum(token)
 
 for key in scraper_config_snow:
     run_snow_process(scraper_config_snow, key)
