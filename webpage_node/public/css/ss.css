@@ -1,0 +1,102 @@
+@import url(http://fonts.googleapis.com/css?family=Oswald);
+
+body {
+  background-color: #ffffff;
+  font-family: 'Oswald', 'Futura', sans-serif;
+  margin: 0; 
+  padding: 0;}
+
+#page {
+  margin: 0 auto 0 auto;
+  position: relative;
+  text-align: center;}
+
+#header-container {
+  height: 250px;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+h1 {
+  text-align: center;
+  margin: 0px 0px 10px 0px;
+  
+}
+
+p {
+  text-align: center;
+  margin: 5px 0px 5px 0px;
+  
+}
+
+.container {
+  width: 500px;
+  clear: both;
+}
+
+.container input {
+  width: 100%;
+  clear: both;
+  text-align: center;
+}
+
+.username {
+  position : relative;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: auto;
+  display:block;
+  border-radius: 8px;
+  border: none;
+  padding: 8px 10px;
+  top: 10px;
+  text-align: center;
+  width:200px;
+  /* right:-100px; */
+
+  /* left: 50px; */
+}
+
+.phonenumber {
+  position : relative;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 10px;
+  display:block;
+  border-radius: 8px;
+  border: #4d6cf3;
+  padding: 8px 10px;
+  top: 10px;
+  text-align: center;
+  width:200px;
+  /* top:35px;
+  right:57px; */
+  /* width: 70%; */
+}
+
+[type=submit] {
+  position : relative;
+  display:block;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: #4d6cf3;
+  color: #ffffff;
+  top: 10px;
+  border-radius: 8px;
+  border: none;
+  padding: 8px 10px;
+  margin-top: 10px;
+  font-family: 'Oswald', 'Futura', sans-serif;
+  font-size: 12px;
+  text-decoration: none;
+  text-transform: uppercase;
+  width:200px;
+  /* top:65px;
+  right:214px; */
+  /* width: 70%; */
+}

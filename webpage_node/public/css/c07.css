@@ -68,7 +68,7 @@ form label{
   margin: 0 0 23px 0;
 }
 
-/* form input.phonenumber{
+ form input.phonenumber{
   color: rgb(0, 0, 0);
   font-size: 20px;
   font-weight: normal;
@@ -346,4 +346,4 @@ a.show{
     background-image: url(../surf2.png);
     background-size: 250px 250px;
   }
-}
+} 
