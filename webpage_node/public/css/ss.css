@@ -118,20 +118,27 @@ p {
 
 /* Modal Content/Box */
 .modal-content {
+  display: flex;
   background-color: #fefefe;
   margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
+  padding: 10px 15px 5px 15px;
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
-  display: block;
+  width: 60%;
+  height: 60%; /* Could be more or less, depending on screen size */
+  flex-direction: column;
+  overflow: hidden;
 }
 
 /* The Close Button */
 .close {
-  color: #aaa;
+  color: #4d6cf3;
   float: right;
-  font-size: 28px;
+  font-size: 50px;
   font-weight: bold;
+  overflow: hidden;
+  height:100px;
+  vertical-align: bottom;
+  flex-direction: row;
 }
 
 .close:hover,
